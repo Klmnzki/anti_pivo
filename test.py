@@ -36,7 +36,11 @@ async def menu(ctx):
         user = guild.get_member(settings['maslo_id'])
         if user.voice:
             await user.move_to(None)
-            await interaction.response.edit_message(content="Маслина ликвидирован!", view=None)
+            await interaction.response.edit_message(content=f"{user.mention} был кикнут!", view=None, delete_after=10)
+        else:
+            await interaction.response.edit_message(content=f"{user.mention} не в онлайне!", view=None, delete_after=10)
+
+        await ctx.message.delete()
 
     button1.callback = button_callback    # код до, относится к первой кнопке
 
@@ -48,8 +52,11 @@ async def menu(ctx):
         if user.voice:
             await user.timeout_for(duration)
             await interaction.response.edit_message(
-                content=f"Пользователь {user.mention} отключён на 1 минуту!", view=None
+                content=f"Пользователь {user.mention} отключён на 1 минуту!", view=None, delete_after=10
                                                     )
+        else:
+            await interaction.response.edit_message(content=f"{user.mention} не в онлайне!", view=None, delete_after=10)
+        await ctx.message.delete()
 
     button2.callback = button_callback   # код до, относится ко второй кнопке
 
